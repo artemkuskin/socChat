@@ -1,0 +1,30 @@
+.background {
+  background: url(https://images.wallpaperscraft.ru/image/single/piatna_fon_linii_66994_1920x1080.jpg) no-repeat center
+    center fixed;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.loginForm {
+  margin: 30px;
+  height: 400px;
+  width: 600px;
+  background-color: aliceblue;
+}
+
+.inputs {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inputBlock {
+  display: flex;
+  flex-direction: column;
+}

@@ -66,16 +66,20 @@ body {
 }
 
 input {
-  height: 40px;
+  height: 45px;
   width: 350px;
-  border-radius: 15px;
+  border-radius: 10px;
   border-style: solid;
-}
-
-label {
   font-size: 20px;
   font-family: "Times New Roman", Times, serif; /* Шрифт с засечками */
   font-style: italic;
+}
+
+label {
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif; /* Шрифт с засечками */
+  font-style: italic;
+  color: rgb(163, 6, 6);
 }
 
 a {

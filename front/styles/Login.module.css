@@ -13,7 +13,6 @@
   margin: 30px;
   height: 400px;
   width: 600px;
-  background-color: aliceblue;
 }
 
 .inputs {
@@ -27,4 +26,5 @@
 .inputBlock {
   display: flex;
   flex-direction: column;
+  margin: 25px;
 }

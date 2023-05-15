@@ -71,20 +71,51 @@ input {
   border-radius: 10px;
   border-style: solid;
   font-size: 20px;
-  font-family: "Times New Roman", Times, serif; /* Шрифт с засечками */
+  font-family: "Times New Roman", Times, serif;
   font-style: italic;
+  border-color: rgba(255, 255, 255, 0.24);
+  background-color: #f7000000;
+  color: rgb(226, 65, 65);
+}
+
+button {
+  height: 30px;
+  width: 100px;
+  border-radius: 20px;
+  background-color: rgb(172, 54, 54);
+  border-style: solid;
+  color: rgb(218, 202, 202);
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  border-color: rgba(0, 0, 0, 0.096);
+  box-shadow: 10px 5px 5px black;
+  margin-inline: 15px;
 }
 
 label {
   font-size: 30px;
-  font-family: "Times New Roman", Times, serif; /* Шрифт с засечками */
+  font-family: "Times New Roman", Times, serif;
   font-style: italic;
-  color: rgb(163, 6, 6);
+  color: rgb(172, 54, 54);
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  font-size: 17px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  color: rgb(172, 54, 54);
+  text-decoration: underline;
+}
+
+button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+a:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 @media (prefers-color-scheme: dark) {

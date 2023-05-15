@@ -1,6 +1,6 @@
 .background {
-  background: url(https://images.wallpaperscraft.ru/image/single/piatna_fon_linii_66994_1920x1080.jpg) no-repeat center
-    center fixed;
+  background: url(https://images.wallpaperscraft.ru/image/single/klaviatura_podsvetka_krasnyj_136083_2560x1440.jpg)
+    no-repeat center center fixed;
   height: 100vh;
   width: 100%;
   background-size: cover;
@@ -13,6 +13,13 @@
   margin: 30px;
   height: 400px;
   width: 600px;
+  /* background-color: rgba(114, 41, 41, 0.158); */
+  border-radius: 20%;
+}
+
+.link {
+  color: rgb(221, 199, 199);
+  text-decoration: auto;
 }
 
 .inputs {
@@ -27,4 +34,27 @@
   display: flex;
   flex-direction: column;
   margin: 25px;
+}
+.boll {
+  height: 50%;
+  width: 35%;
+  position: fixed;
+  border-top-right-radius: 90%;
+  border-bottom-right-radius: 6%;
+  background-color: beige;
+  margin-top: 53vh;
+  background: rgb(214, 39, 39);
+  background: linear-gradient(
+    40deg,
+    rgba(214, 39, 39, 0) 0%,
+    rgba(0, 0, 0, 0.19091386554621848) 19%,
+    rgba(149, 11, 11, 0.5578606442577031) 87%
+  );
+}
+
+.loginButtons {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
 }

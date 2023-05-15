@@ -1,10 +1,16 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Login.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { mainSlice } from "@/store/mainSlice";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const { category } = useSelector((state: any) => state.mainReducer);
+  const { seCategory } = mainSlice.actions;
+  const categyChange = () => {
+    dispatch(seCategory());
+  };
   return (
     <>
       <Head>
@@ -13,16 +19,26 @@ export default function Login() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className={styles.boll}></div>
       <main className={`${styles.background}`}>
         <div className={styles.loginForm}>
           <div className={styles.inputs}>
-            <div className={styles.input}>
-              <label>Email</label>
+            <div className={styles.inputBlock}>
+              <label>Email:*</label>
               <input></input>
             </div>
             <div className={styles.inputBlock}>
-              <label>Password</label>
+              <label>Password:*</label>
               <input></input>
+            </div>
+            <div className={styles.loginButtons}>
+              <a>Registration</a>
+              <button>
+                <Link className={styles.link} href={"/"}>
+                  Login
+                </Link>
+              </button>
+              <a onClick={categyChange}>Forgot password?</a>
             </div>
           </div>
         </div>

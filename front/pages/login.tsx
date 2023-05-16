@@ -2,15 +2,38 @@ import Head from "next/head";
 import styles from "@/styles/Login.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { mainSlice } from "@/store/mainSlice";
+import { login, mainSlice, registration } from "@/store/mainSlice";
+import { useState } from "react";
 
 export default function Login() {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const dispatch = useDispatch();
-  const { category } = useSelector((state: any) => state.mainReducer);
-  const { seCategory } = mainSlice.actions;
-  const categyChange = () => {
-    dispatch(seCategory());
+  const { category, users, isAuth } = useSelector(
+    (state: any) => state.mainReducer
+  );
+
+
+  const loginUser = () => {
+    dispatch(login({ email, password }));
+    console.log(users);
   };
+
+  const registrUser = () => {
+    dispatch(registration({ email, password }));
+    console.log(users);
+  };
+
+  const changeEmailInput = (email: string) => {
+    setEmail(email);
+    console.log(email);
+  };
+
+  const changePasswordInput = (password: string) => {
+    setPassword(password);
+  };
+
+
   return (
     <>
       <Head>
@@ -25,20 +48,36 @@ export default function Login() {
           <div className={styles.inputs}>
             <div className={styles.inputBlock}>
               <label>Email:*</label>
-              <input></input>
+              <input
+                onChange={(e) => changeEmailInput(e.target.value)}
+                value={email}
+              />
             </div>
             <div className={styles.inputBlock}>
               <label>Password:*</label>
-              <input></input>
+              <input
+                onChange={(e) => changePasswordInput(e.target.value)}
+                value={password}
+              />
             </div>
             <div className={styles.loginButtons}>
               <a>Registration</a>
               <button>
-                <Link className={styles.link} href={"/"}>
+                <Link
+                  onClick={() => loginUser()}
+                  className={styles.link}
+                  href={isAuth ? `/` : `/login`}
+                >
                   Login
                 </Link>
               </button>
-              <a onClick={categyChange}>Forgot password?</a>
+              <Link
+                onClick={() => registrUser()}
+                className={styles.link}
+                href={isAuth ? `/` : `/login`}
+              >
+                Forgot password?
+              </Link>
             </div>
           </div>
         </div>

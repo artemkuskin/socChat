@@ -9,10 +9,7 @@ export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const dispatch = useDispatch();
-  const { category, users, isAuth } = useSelector(
-    (state: any) => state.mainReducer
-  );
-
+  const { users, isAuth } = useSelector((state: any) => state.mainReducer);
 
   const loginUser = () => {
     dispatch(login({ email, password }));
@@ -33,7 +30,6 @@ export default function Login() {
     setPassword(password);
   };
 
-
   return (
     <>
       <Head>
@@ -48,34 +44,20 @@ export default function Login() {
           <div className={styles.inputs}>
             <div className={styles.inputBlock}>
               <label>Email:*</label>
-              <input
-                onChange={(e) => changeEmailInput(e.target.value)}
-                value={email}
-              />
+              <input onChange={(e) => changeEmailInput(e.target.value)} value={email} />
             </div>
             <div className={styles.inputBlock}>
               <label>Password:*</label>
-              <input
-                onChange={(e) => changePasswordInput(e.target.value)}
-                value={password}
-              />
+              <input onChange={(e) => changePasswordInput(e.target.value)} value={password} />
             </div>
             <div className={styles.loginButtons}>
               <a>Registration</a>
               <button>
-                <Link
-                  onClick={() => loginUser()}
-                  className={styles.link}
-                  href={isAuth ? `/` : `/login`}
-                >
+                <Link onClick={() => loginUser()} className={styles.link} href={isAuth ? `/` : `/login`}>
                   Login
                 </Link>
               </button>
-              <Link
-                onClick={() => registrUser()}
-                className={styles.link}
-                href={isAuth ? `/` : `/login`}
-              >
+              <Link onClick={() => registrUser()} className={styles.link} href={isAuth ? `/` : `/login`}>
                 Forgot password?
               </Link>
             </div>

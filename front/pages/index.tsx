@@ -7,25 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth, logout, mainSlice } from "@/store/mainSlice";
 import { useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const dispatch = useDispatch();
-  const { category, users, isAuth } = useSelector(
-    (state: any) => state.mainReducer
-  );
+  const { category, users, isAuth } = useSelector((state: any) => state.mainReducer);
   const { changeIsAuth } = mainSlice.actions;
   const logoutUser = () => {
-    dispatch(logout({ email, password }));
-    console.log(users);
+    dispatch(logout());
+    // console.log(isAuth);
   };
+  // artem.kuskin@progforce.com
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth());
     }
-    dispatch(changeIsAuth());
   }, []);
+
+  // if (!isAuth) {
+  //   return router.push("/login");
+  // }
 
   return (
     <>
@@ -36,18 +39,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button>
-        <Link
-          onClick={() => logoutUser()}
-          className={styles.link}
-          href={isAuth ? `/` : `/login`}
-        >
+        <Link onClick={() => logoutUser()} className={styles.link} href={isAuth ? `/` : `/login`}>
           Logout
         </Link>
-        <h1>
-          {users?.isActivated
-            ? "Акк подтверден по почте"
-            : "Подтвердите Аккаунт"}
-        </h1>
+        <h1>{users?.isActivated ? "Акк подтверден по почте" : "Подтвердите Аккаунт"}</h1>
       </button>
     </>
   );

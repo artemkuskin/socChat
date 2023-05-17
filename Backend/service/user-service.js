@@ -9,9 +9,7 @@ class UserService {
   async registration(email, password) {
     const candidate = await userModel.findOne({ email });
     if (candidate) {
-      throw ApiError.BadRequest(
-        `Пользователь с почтовым адрессом ${candidate.email} существует`
-      );
+      throw ApiError.BadRequest(`Пользователь с почтовым адрессом ${candidate.email} существует`);
     }
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = uuid.v4();
@@ -21,10 +19,7 @@ class UserService {
       password: hashPassword,
       activationLink,
     });
-    await mailService.sendActivationMail(
-      email,
-      `${process.env.API_URL}/api/activate/${activationLink}`
-    );
+    await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
     const userDto = new UserDto(user);
     const tokens = tokenService.generateToken({ ...userDto });
@@ -73,13 +68,15 @@ class UserService {
     if (!refreshToken) {
       throw ApiError.UnautorizedError();
     }
-    const userData = tokenService.validateRefreshToken(refreshToken);
+    const userData = await tokenService.validateRefreshToken(refreshToken);
+    console.log(userData);
     const tokenFromDb = await tokenService.findToken(refreshToken);
-    if (!userData || !tokenFromDb) {
+    console.log(tokenFromDb);
+    if (!userData) {
       throw ApiError.UnautorizedError();
     }
 
-    const user = await  userModel.findById(userData.id)
+    const user = await userModel.findById(userData.id);
     const userDto = new UserDto(user);
     const tokens = tokenService.generateToken({ ...userDto });
 
@@ -91,11 +88,10 @@ class UserService {
     };
   }
 
-  async getAllUser () {
-     const user = await userModel.find()
-     return user
+  async getAllUser() {
+    const user = await userModel.find();
+    return user;
   }
-
 }
 
 module.exports = new UserService();

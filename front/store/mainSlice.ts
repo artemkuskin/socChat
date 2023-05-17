@@ -9,32 +9,26 @@ const initialState = {
   isAuth: false,
 };
 
-export const registration = createAsyncThunk(
-  "app/registration",
-  async ({ email, password }) => {
-    try {
-      const response = await AuthService.registration(email, password);
-      localStorage.setItem("token", response.data.accessToken);
-      return response.data;
-    } catch (e) {
-      console.log(e.response?.data?.message);
-    }
+export const registration = createAsyncThunk("app/registration", async ({ email, password }) => {
+  try {
+    const response = await AuthService.registration(email, password);
+    localStorage.setItem("token", response.data.accessToken);
+    return response.data;
+  } catch (e) {
+    console.log(e.response?.data?.message);
   }
-);
+});
 
-export const login = createAsyncThunk(
-  "app/login",
-  async ({ email, password }) => {
-    try {
-      const response = await AuthService.login(email, password);
-      localStorage.setItem("token", response.data.accessToken);
-      console.log(response?.data);
-      return response.data;
-    } catch (e) {
-      console.log(e.response?.data?.message);
-    }
+export const login = createAsyncThunk("app/login", async ({ email, password }) => {
+  try {
+    const response = await AuthService.login(email, password);
+    localStorage.setItem("token", response.data.accessToken);
+    console.log(response?.data);
+    return response.data;
+  } catch (e) {
+    console.log(e.response?.data?.message);
   }
-);
+});
 
 export const checkAuth = createAsyncThunk("app/refresh", async () => {
   try {
@@ -67,16 +61,20 @@ export const mainSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(registration.fulfilled, (state, action) => {
       state.isAuth = true;
-      state.users = action.payload.users;
+      state.users = action.payload.user;
     }),
       builder.addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.users = action.payload.users;
+        state.users = action.payload.user;
       }),
       builder.addCase(checkAuth.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.users = action.payload.users;
+        state.users = action?.payload?.user;
       }),
+      // builder.addCase(checkAuth.rejected, (state, action) => {
+      //   state.isAuth = false;
+      //   state.users = {};
+      // }),
       builder.addCase(logout.fulfilled, (state, action) => {
         state.isAuth = false;
         state.users = {};

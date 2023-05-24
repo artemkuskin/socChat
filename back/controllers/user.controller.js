@@ -6,6 +6,11 @@ class UserController {
     try {
       const { name, surname, email, password } = req.body;
       const userData = await userService.registration(name, surname, email, password);
+      const refreshToken = userData[1].refreshtoken;
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 15 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
       res.json(userData);
     } catch (e) {
       console.log(e);
@@ -21,15 +26,21 @@ class UserController {
     }
   }
 
-  async getOneUser(req, res) {
+  async login(req, res) {
     try {
-      const id = req.params.id;
-      const user = await db.query("SELECT * FROM person where id = $1", [id]);
-      if (!user.rows[0]) {
-        res.json("Пользователя с таким id не существует");
-      } else {
-        res.json(user.rows[0]);
-      }
+      const { email, password } = req.body;
+      const userData = await userService.login(email, password);
+      res.json(userData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async activate(req, res) {
+    try {
+      const activationLink = req.params.link;
+      await userService.activate(activationLink);
+      return res.redirect(process.env.CLIENT_URL);
     } catch (e) {
       console.log(e);
     }

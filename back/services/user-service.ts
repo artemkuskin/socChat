@@ -33,6 +33,8 @@ export class UserService {
   async login(email: any, password: any) {
     const user = await db.query("SELECT * FROM person where email=$1 AND password=$2", [email, password]);
     if (!user.rows[0]) {
+      console.log(email, password);
+
       throw ApiError.BadRequest("Неверный логин или пароль");
     }
 

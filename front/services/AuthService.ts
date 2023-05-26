@@ -1,8 +1,8 @@
 import $api from "@/http";
 
-export  class AuthService {
+export class AuthService {
   static async login(email: string, password: string) {
-    return $api.post("/login", { email, password });
+    return $api.get("/login", { email, password });
   }
 
   static async registration(email: string, password: string) {
@@ -10,6 +10,6 @@ export  class AuthService {
   }
 
   static async logout() {
-    return $api.post("/logout");
+    return $api.delete("/logout");
   }
 }

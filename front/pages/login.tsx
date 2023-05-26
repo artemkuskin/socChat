@@ -6,8 +6,8 @@ import { login, mainSlice, registration } from "@/store/mainSlice";
 import { useState } from "react";
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { users, isAuth } = useSelector((state: any) => state.mainReducer);
 
@@ -53,7 +53,7 @@ export default function Login() {
             <div className={styles.loginButtons}>
               <a>Registration</a>
               <button>
-                <Link onClick={() => loginUser()} className={styles.link} href={isAuth ? `/` : `/login`}>
+                <Link onClick={() => loginUser()} className={styles.link} href={`/login`}>
                   Login
                 </Link>
               </button>

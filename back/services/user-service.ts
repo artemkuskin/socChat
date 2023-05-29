@@ -25,6 +25,7 @@ export class UserService {
       "INSERT INTO token (accessToken, refreshToken, user_id) values ($1, $2, $3) RETURNING *",
       [accessToken, refreshToken, id]
     );
+
     await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
     const userData = [newPerson.rows[0], newToken.rows[0]];
     return userData;

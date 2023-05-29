@@ -4,7 +4,7 @@ const userController = new UserController();
 export const router: Router = Router();
 
 router.post("/registration", userController.registration);
-router.get("/login", userController.login);
+router.post("/login", userController.login);
 router.get("/activate/:link", userController.activate);
 router.delete("/logout", userController.logout);
 router.get("/users", userController.checkAuth, userController.getUsers);

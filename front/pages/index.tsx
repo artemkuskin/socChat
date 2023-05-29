@@ -1,34 +1,56 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Login.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { checkAuth, logout, mainSlice } from "@/store/mainSlice";
-import { useEffect } from "react";
-
+import { checkAuth, login, mainSlice, registration } from "@/store/mainSlice";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function Home() {
-  const router = useRouter();
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { category, users, isAuth } = useSelector((state: any) => state.mainReducer);
-  const { changeIsAuth } = mainSlice.actions;
-  const logoutUser = () => {
-    dispatch(logout());
-    // console.log(isAuth);
-  };
-  // artem.kuskin@progforce.com
+  const { user, isAuth } = useSelector((state: any) => state.mainReducer);
+  const { push } = useRouter();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(checkAuth());
+    const isCheckAuth = () => {
+      if (localStorage.getItem("token")) {
+        dispatch(checkAuth());
+      }
+    };
+    isCheckAuth();
+    if (isAuth) {
+      push("/client");
     }
   }, []);
 
-  // if (!isAuth) {
-  //   return router.push("/login");
-  // }
+  const loginUser = () => {
+    dispatch(login({ email, password }));
+    console.log(user);
+  };
+
+  const registrUser = () => {
+    dispatch(registration({ email, password }));
+    console.log(user);
+  };
+
+  const changeEmailInput = (email: string) => {
+    setEmail(email);
+    console.log(email);
+  };
+
+  const changePasswordInput = (password: string) => {
+    setPassword(password);
+  };
+
+  const onSubmint = (event) => {
+    event.preventDefault();
+    const response = dispatch(login({ email, password }));
+    if (response) {
+      push("client");
+    }
+  };
 
   return (
     <>
@@ -38,12 +60,30 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <button>
-        <Link onClick={() => logoutUser()} className={styles.link} href={isAuth ? `/` : `/login`}>
-          Logout
-        </Link>
-        <h1>{users?.isActivated ? "Акк подтверден по почте" : "Подтвердите Аккаунт"}</h1>
-      </button>
+      <div className={styles.boll}></div>
+      <form className={`${styles.background}`} onSubmit={onSubmint}>
+        <div className={styles.loginForm}>
+          <div className={styles.inputs}>
+            <div className={styles.inputBlock}>
+              <label>Email:*</label>
+              <input onChange={(e) => changeEmailInput(e.target.value)} value={email} />
+            </div>
+            <div className={styles.inputBlock}>
+              <label>Password:*</label>
+              <input onChange={(e) => changePasswordInput(e.target.value)} value={password} />
+            </div>
+            <div className={styles.loginButtons}>
+              <a>Registration</a>
+
+              <button className={styles.link} type="submit">
+                Login
+              </button>
+
+              <button className={styles.link}>Forgot password?</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </>
   );
 }

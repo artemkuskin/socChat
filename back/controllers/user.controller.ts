@@ -19,13 +19,16 @@ export class UserController {
   async login(req: any, res: any) {
     try {
       const { email, password } = req.body;
+      console.log(email, password);
+
       const userData = await userService.login(email, password);
       const refreshToken = userData[1].refreshtoken;
       res.cookie("refreshToken", refreshToken, {
         maxAge: 15 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      return res.json(userData);
+
+      return res.json({ user: userData[0], token: userData[1] });
     } catch (e) {
       console.log(e);
     }
